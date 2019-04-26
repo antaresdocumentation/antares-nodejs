@@ -21,7 +21,7 @@ antares.setAccessKey('your-access-key-here');
 antares.send(myData, 'your-project-name', 'your-device-name')
 .then(function(response) {
   console.log(response);
-})
+});
 ```
 
 ### API Reference
