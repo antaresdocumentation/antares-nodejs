@@ -10,10 +10,14 @@ npm install antares-http --save
 ### Usage Example
 ```js
 var antares = require('antares-http');
+var myData = {
+  'temperature': 30,
+  'humidity': 78
+}
 
 antares.setAccessKey('your-access-key-here');
 
-antares.send('hello world!', 'your-project-name', 'your-device-name')
+antares.send(myData, 'your-project-name', 'your-device-name')
 .then(function(response) => {
   console.log(response);
 })
