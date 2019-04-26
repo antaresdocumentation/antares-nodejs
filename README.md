@@ -6,3 +6,18 @@ Make sure you have NodeJS and npm installed.
 ```
 npm install antares-http --save
 ```
+
+### Usage Example
+```js
+var antares = require('antares-http');
+
+antares.setAccessKey('your-access-key-here');
+
+antares.send('hello world!', 'your-project-name', 'your-device-name')
+.then(function(response) => {
+  console.log(response);
+})
+```
+
+### API Reference
+TODO
