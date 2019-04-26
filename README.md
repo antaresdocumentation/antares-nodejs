@@ -10,6 +10,7 @@ npm install antares-http --save
 ### Usage Example
 ```js
 var antares = require('antares-http');
+
 var myData = {
   temperature: 30,
   humidity: 78
