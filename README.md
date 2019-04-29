@@ -34,7 +34,7 @@ Set whether you want to show debug results of every HTTP request to Antares or n
 Functions below this line use `Promise` to return the response of each HTTP request, so you'll need to use a `.then` to retrieve the result. For example:
 ```js
 antares.get('project1', 'device1')
-.then(function(response) => {
+.then(function(response) {
   console.log(response.content);
 });
 ```
