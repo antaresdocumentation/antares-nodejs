@@ -10,8 +10,9 @@
  *  get(projectName, deviceName) - Get the latest data from your Antares device
  *  getAll(projectName, deviceName, limit) - Get chunk of data from your Antares device, including the contents
  *  getAllId(projectName, deviceName, limit) - Get chunk of data from your Antares device, but only the ID
- *  getSpecific(identifier) - Get specific data. the {identifier} parameter must follow this structure: /antares-cse/antares-id/{projectName}/{deviceName}/cin_{identifier}
+ *  getSpecific(projectName, deviceName, instance) - Get specific data. the {instance} parameter must be cin_{identifier}
  *  send(data, projectName, deviceName)  - Send data into your Antares device
+ *  getDeviceId(projectName, deviceName) - Get your device ID
  *  sendById(data, deviceId) - Send data into your Antares device through ID (cnt-{identifier})
  * */
 
@@ -62,11 +63,11 @@ exports.get = function(projectName, deviceName) {
   });
 }
 
-exports.getSpecific = function(contentInstance) {
+exports.getSpecific = function(projectName, deviceName, instance) {
   // Initiate HTTP request
   return new Promise(function(resolve, reject) {
     const options = {
-      url: `https://platform.antares.id:8443/~${contentInstance}`,
+      url: `https://platform.antares.id:8443/~/antares-cse/antares-id/${projectName}/${deviceName}/${instance}`,
       headers: {
         'X-M2M-Origin': _antaresAccessKey, // The access key 
         'Content-Type': 'application/json;ty=4',
@@ -188,7 +189,38 @@ exports.getAllId = function(projectName, deviceName, limit) {
         // console.log('success');
         // console.log(body);
         const data = JSON.parse(body)['m2m:uril'];
-        resolve(data);
+        let newData = [];
+
+        data.forEach(function(singleData) {
+          const formedUrl = singleData.split('/');
+          newData.push(formedUrl[5]);
+        });
+        
+        resolve(newData);
+      }
+    }
+    request(options, callback);
+  });
+}
+
+exports.getDeviceId = function(projectName, deviceName) {
+  return new Promise(function(resolve, reject) {
+    const options = {
+      url: `https://platform.antares.id:8443/~/antares-cse/antares-id/${projectName}/${deviceName}`,
+      headers: {
+        'X-M2M-Origin': _antaresAccessKey, // The access key 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    };
+
+    function callback(error, response, body) {
+      if(!error) {
+        // console.log('success');
+        // console.log(body);
+        const data = JSON.parse(response.body)['m2m:cnt']['ri'];
+        const deviceId = data.split('/')[2]
+        resolve(deviceId);
       }
     }
     request(options, callback);
@@ -301,7 +333,7 @@ exports.sendById = function(data, deviceId) {
     dataParsed = data;
   }
 
-  console.log(dataParsed);
+  //console.log(dataParsed);
   
   const dataTemplate = {
     'm2m:cin': {
