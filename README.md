@@ -32,9 +32,6 @@ antares.send(myData, 'your-project-name', 'your-device-name')
 * `setAccessKey(access-key)`  
 Set the `access-key` parameter to your Antares access key.  
 
-* `setDebug(status)`  
-Set whether you want to show debug results of every HTTP request to Antares or not, can be set to `True` or `False`.  
-
 Functions below this line use `Promise` to return the response of each HTTP request, so you'll need to use a `.then` to retrieve the result. For example:
 ```js
 antares.get('project1', 'device1')
@@ -64,7 +61,7 @@ For more information about promises, please read more at [Mozilla Developer Guid
     return: antares device ID (i.e. `cnt-44637281`)  
 
 * `send(data, projectName, deviceName)`  
-    Send data to your Antares project. This can be a python dictionary or string.  
+    Send data to your Antares project. This can be a JavaScript object or other datatype (string/number).  
     return: POST response data from Antares  
 
 * `sendById(data, device-id)`  
