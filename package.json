@@ -1,6 +1,6 @@
 {
   "name": "antares-http",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A library to connect NodeJS application to Antares IoT Platform",
   "main": "index.js",
   "scripts": {
